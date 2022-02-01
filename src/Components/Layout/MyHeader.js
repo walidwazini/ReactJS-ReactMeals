@@ -3,9 +3,9 @@ import React, { Fragment } from 'react';
 import logo from './logo.svg';
 import classes from './MyHeader.module.css'
 
-const headerBarContent = (<>
+// const headerBarContent = (<>
 
-</>)
+// </>)
 
 const MyHeader = (props) => {
   return (
