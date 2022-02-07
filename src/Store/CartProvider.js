@@ -31,12 +31,33 @@ const cartReducer = (state, action) => {
     else {  // adding new product to the cart 
       updatedItems = state.items.concat(action.item)
     }
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
+    }
+  }
+
+  if (action.type === 'REMOVE') {
+    const existingItemCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.id
+    )
+    const existingItem = state.items[existingItemCartItemIndex]
+    const updatedTotalAmount = state.totalAmount - existingItem.price
+    let updatedItems
+    if (existingItem.amount === 1) {  // Remove the whole product from cart
+      updatedItems = state.items.filter(item => item.id !== action.id)
+    } else { // Reduce quantity of the product 
+      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 }
+      updatedItems = [...state.items]
+      updatedItems[existingItemCartItemIndex] = updatedItem
+    }
 
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
     }
   }
+
   return defaultCartState
 }
 
