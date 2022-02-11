@@ -44,14 +44,15 @@ const cartReducer = (state, action) => {
     const existingItem = state.items[existingItemCartItemIndex]
     const updatedTotalAmount = state.totalAmount - existingItem.price
     let updatedItems
+
     if (existingItem.amount === 1) {  // Remove the whole product from cart
       updatedItems = state.items.filter(item => item.id !== action.id)
-    } else { // Reduce quantity of the product 
+    }
+    else { // Reduce quantity of the product 
       const updatedItem = { ...existingItem, amount: existingItem.amount - 1 }
       updatedItems = [...state.items]
       updatedItems[existingItemCartItemIndex] = updatedItem
     }
-
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
@@ -62,7 +63,8 @@ const cartReducer = (state, action) => {
 }
 
 const CartProvider = (props) => {
-  const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState)
+  const [cartState, dispatchCartAction] =
+    useReducer(cartReducer, defaultCartState)
 
   const addItemHandler = item => {
     dispatchCartAction({ type: 'ADD', item: item })
